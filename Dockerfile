@@ -3,7 +3,7 @@ FROM python:2.7-slim
 VOLUME ["/opendxl"]
 
 RUN apt-get update \
-    && apt-get install -y curl git unzip wget telnet \
+    && apt-get install -y curl git unzip wget telnet nginx \
     && curl -sL https://deb.nodesource.com/setup_8.x | /bin/bash - \
     && apt-get install -y nodejs build-essential \
     && npm i cloudcmd -g \
@@ -17,12 +17,6 @@ COPY files/.bashrc /root
 COPY files/edit.json /usr/lib/node_modules/cloudcmd/node_modules/edward/json/
 COPY dxlenvironment /dxlenvironment
 
-ENV cloudcmd_contact false
-ENV cloudcmd_console false
-ENV cloudcmd_one_panel_mode true
-ENV cloudcmd_terminal true
-ENV cloudcmd_terminal_path gritty
-
-EXPOSE 8000
+EXPOSE 9443
 
 ENTRYPOINT ["/dxlenvironment/startup.sh"]
